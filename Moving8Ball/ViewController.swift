@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         
 
             // Fade out to set the text
-            UIView.animateWithDuration(0.8, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animateWithDuration(0.4, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.userLabel.alpha = 0.0
                 
                 }, completion: {
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
                     self.userLabel?.text = response
                     
                     // Fade in
-                    UIView.animateWithDuration(0.8, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                    UIView.animateWithDuration(0.4, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
                         self.userLabel.alpha = 1.0
                         }, completion: nil)
             })
