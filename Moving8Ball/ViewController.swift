@@ -7,60 +7,92 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     
     @IBOutlet var userInput: UITextField!
     @IBOutlet var userLabel: UILabel!
-    @IBOutlet weak var shake : UIButton?
+    var soundResponse : AVAudioPlayer!
+    
+    
+    var userresponses = [QuestionResponseModel]()
     
     @IBOutlet var circleImage: UIImageView!
     
-    
-    @IBAction func enterPressed(sender: AnyObject) {
-        changeResponse()
-    }
-    @IBAction func shakebuttonpressed(sender: UIButton) {
-        
-        changeResponse()
-        
-    }
-    
-    func changeResponse(){
-    
-        let ball : EightBallModel = EightBallModel()
-        
-        let response = ball.magicResponse()
-        let circle = ball.magicCircle()
-        
-        self.circleImage.image=UIImage(named: circle)
-        
-
-            // Fade out to set the text
-            UIView.animateWithDuration(0.4, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.userLabel.alpha = 0.0
-                
-                }, completion: {
-                    (finished: Bool) -> Void in
-                    
-                    //Once the label is completely invisible, set the text and fade it back in
-                    self.userLabel?.text = response
-                    
-                    // Fade in
-                    UIView.animateWithDuration(0.4, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                        self.userLabel.alpha = 1.0
-                        }, completion: nil)
-            })
-
-        
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+
+        if let savedResponses = loadResponses(){
+            userresponses += savedResponses
+        }else {
+            loadSampleResponse()
+        }
+   
+    }
+    
+    // load existing responses
+    func loadResponses() -> [QuestionResponseModel]? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(QuestionResponseModel.ArchiveURL.path!) as? [QuestionResponseModel]
+    }
+    
+    func loadSampleResponse(){
         
+        let existOne = QuestionResponseModel(question: "What day is it today?", answer: "A great day!")!
+        let existTwo = QuestionResponseModel(question: "Is it going to be a good year?", answer: "Maybe")!
+        let existThree = QuestionResponseModel(question: "Should I eat pizza", answer: "Not even a question")!
+        
+        userresponses.append(existOne)
+        userresponses.append(existTwo)
+        userresponses.append(existThree)
+
+    }
+    
+    // event when enter is clicked in the text field
+    @IBAction func enterPressed(sender: AnyObject) {
+        changeResponse()
+        let tempQuestion : String? = userInput.text
+        let tempAnswer: String? = userLabel.text
+        
+        if let temp = tempQuestion {
+            if let innerTemp = tempAnswer {
+                
+                let userGen = QuestionResponseModel(question: temp, answer: innerTemp)
+                userresponses.append(userGen!)
+            }
+        }
+    }
+    
+    // history button press
+    @IBAction func shakebuttonpressed(sender: UIButton) {}
+    
+    // create a response object for output
+    func changeResponse(){
+        
+        let ball : EightBallModel = EightBallModel()
+        
+        let index = ball.magicResponse()
+        let userresp = ball.getResponseByIndex(index)
+        let usersound = ball.getSoundByIndex(index)
+        let circle = ball.magicCircle()
+        
+        self.circleImage.image=UIImage(named: circle)
+        self.userLabel?.text = userresp
+        
+        let path = NSBundle.mainBundle().pathForResource(usersound, ofType: nil)!
+        var url = NSURL(fileURLWithPath: path)
+        
+        do {
+            let sound = try AVAudioPlayer(contentsOfURL: url)
+            soundResponse = sound
+            sound.play()
+        }catch {
+            
+        }
         
     }
 
@@ -68,9 +100,14 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
     
-
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        
+        let historyViewController = segue.destinationViewController as! HistoryViewController
+        historyViewController.historyresponses = self.userresponses
+        
+    }
 
 }
 
