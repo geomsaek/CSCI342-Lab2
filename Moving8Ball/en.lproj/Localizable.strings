@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  Moving8Ball
+
+  Created by Matthew Saliba on 7/05/2016.
+  Copyright © 2016 Matthew Saliba. All rights reserved.
+*/
+
+MAYBE = "Maybe if you try a little harder";
+HAZY = "Reply hazy, come back tomorrow";
+DECIDE = "It is decidely so";
+SOURCE = "My sources say no";
+LATER = "Ask again later";
+DONTCOUNT = "Don't count on it";

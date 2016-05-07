@@ -35,8 +35,6 @@ class EightBallModel:CustomStringConvertible, CustomDebugStringConvertible {
     
     let circleImages = [ "circle1","circle2","circle3","circle4","circle5","circle6" ]
     
-    let responseSounds = [ "maybe.mp3", "hazy.mp3","decide.mp3","sources.mp3","askagain.mp3","dontcount.mp3"] 
-    
     var responseArray : [String]? = [String]()
     var circleArray : [String]? = [String]()
     
@@ -55,12 +53,12 @@ class EightBallModel:CustomStringConvertible, CustomDebugStringConvertible {
      and combines it with the extraResponseArray
      */
     
-    init(extraResponseArray : Array<String> ) {
-        responseArray?.appendContentsOf(initialResponseArray)
-        responseArray?.appendContentsOf(extraResponseArray)
-        
-        circleArray?.appendContentsOf(circleImages)
-    }
+//    init(extraResponseArray : Array<String> ) {
+//        responseArray?.appendContentsOf(initialResponseArray)
+//        responseArray?.appendContentsOf(extraResponseArray)
+//        
+//        circleArray?.appendContentsOf(circleImages)
+//    }
     
     func magicResponse() -> Int {
         
@@ -75,10 +73,6 @@ class EightBallModel:CustomStringConvertible, CustomDebugStringConvertible {
     func getResponseByIndex(responseIndex : Int) -> String {
         
         return responseArray![responseIndex]
-    }
-    
-    func getSoundByIndex(soundIndex: Int) -> String {
-        return responseSounds[soundIndex]
     }
     
     func magicCircle() -> String{

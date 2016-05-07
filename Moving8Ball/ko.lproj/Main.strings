@@ -1,0 +1,12 @@
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "EtJ-VU-bMI"; */
+"EtJ-VU-bMI.text" = "자막";
+
+/* Class = "UIButton"; normalTitle = "HISTORY"; ObjectID = "g0j-9l-i6a"; */
+"g0j-9l-i6a.normalTitle" = "역사";
+
+/* Class = "UILabel"; text = "Ask away!"; ObjectID = "oXC-Ed-JjR"; */
+"oXC-Ed-JjR.text" = "물어봐!";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "yvH-Fd-aWh"; */
+"yvH-Fd-aWh.text" = "제목";

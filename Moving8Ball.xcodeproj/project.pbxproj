@@ -7,14 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C92B82841CCE05E4007914C4 /* askagain.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C92B827E1CCE05E4007914C4 /* askagain.mp3 */; };
-		C92B82851CCE05E4007914C4 /* decide.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C92B827F1CCE05E4007914C4 /* decide.mp3 */; };
-		C92B82861CCE05E4007914C4 /* dontcount.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C92B82801CCE05E4007914C4 /* dontcount.mp3 */; };
-		C92B82871CCE05E4007914C4 /* hazy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C92B82811CCE05E4007914C4 /* hazy.mp3 */; };
-		C92B82881CCE05E4007914C4 /* maybe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C92B82821CCE05E4007914C4 /* maybe.mp3 */; };
-		C92B82891CCE05E4007914C4 /* sources.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C92B82831CCE05E4007914C4 /* sources.mp3 */; };
 		C9585B8D1CBCD5C3004B0C3E /* QuestionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9585B8C1CBCD5C3004B0C3E /* QuestionResponseModel.swift */; };
 		C9585BB31CBD38C8004B0C3E /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9585BB21CBD38C8004B0C3E /* HistoryViewController.swift */; };
+		C9922FB41CDDA73900429801 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9922FB61CDDA73900429801 /* Localizable.strings */; };
 		C9C7F5141C98D7BC001C821C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C7F5131C98D7BC001C821C /* AppDelegate.swift */; };
 		C9C7F5161C98D7BC001C821C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C7F5151C98D7BC001C821C /* ViewController.swift */; };
 		C9C7F5191C98D7BC001C821C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9C7F5171C98D7BC001C821C /* Main.storyboard */; };
@@ -43,14 +38,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C92B827E1CCE05E4007914C4 /* askagain.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = askagain.mp3; sourceTree = "<group>"; };
-		C92B827F1CCE05E4007914C4 /* decide.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = decide.mp3; sourceTree = "<group>"; };
-		C92B82801CCE05E4007914C4 /* dontcount.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dontcount.mp3; sourceTree = "<group>"; };
-		C92B82811CCE05E4007914C4 /* hazy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hazy.mp3; sourceTree = "<group>"; };
-		C92B82821CCE05E4007914C4 /* maybe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = maybe.mp3; sourceTree = "<group>"; };
-		C92B82831CCE05E4007914C4 /* sources.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sources.mp3; sourceTree = "<group>"; };
 		C9585B8C1CBCD5C3004B0C3E /* QuestionResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionResponseModel.swift; sourceTree = "<group>"; };
 		C9585BB21CBD38C8004B0C3E /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		C9922FB01CDDA71A00429801 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		C9922FB11CDDA71A00429801 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		C9922FB51CDDA73900429801 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C9922FB81CDDA73F00429801 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C9C7F5101C98D7BC001C821C /* Moving8Ball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moving8Ball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9C7F5131C98D7BC001C821C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9C7F5151C98D7BC001C821C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +88,7 @@
 		C9C7F5071C98D7BC001C821C = {
 			isa = PBXGroup;
 			children = (
+				C9922FB61CDDA73900429801 /* Localizable.strings */,
 				C9C7F5121C98D7BC001C821C /* Moving8Ball */,
 				C9C7F5271C98D7BC001C821C /* Moving8BallTests */,
 				C9C7F5321C98D7BC001C821C /* Moving8BallUITests */,
@@ -115,12 +109,6 @@
 		C9C7F5121C98D7BC001C821C /* Moving8Ball */ = {
 			isa = PBXGroup;
 			children = (
-				C92B827E1CCE05E4007914C4 /* askagain.mp3 */,
-				C92B827F1CCE05E4007914C4 /* decide.mp3 */,
-				C92B82801CCE05E4007914C4 /* dontcount.mp3 */,
-				C92B82811CCE05E4007914C4 /* hazy.mp3 */,
-				C92B82821CCE05E4007914C4 /* maybe.mp3 */,
-				C92B82831CCE05E4007914C4 /* sources.mp3 */,
 				C9C7F5131C98D7BC001C821C /* AppDelegate.swift */,
 				C9C7F5151C98D7BC001C821C /* ViewController.swift */,
 				C9C7F5171C98D7BC001C821C /* Main.storyboard */,
@@ -238,6 +226,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = C9C7F5071C98D7BC001C821C;
 			productRefGroup = C9C7F5111C98D7BC001C821C /* Products */;
@@ -256,15 +245,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C92B82881CCE05E4007914C4 /* maybe.mp3 in Resources */,
-				C92B82891CCE05E4007914C4 /* sources.mp3 in Resources */,
 				C9C7F51E1C98D7BC001C821C /* LaunchScreen.storyboard in Resources */,
-				C92B82841CCE05E4007914C4 /* askagain.mp3 in Resources */,
-				C92B82871CCE05E4007914C4 /* hazy.mp3 in Resources */,
-				C92B82851CCE05E4007914C4 /* decide.mp3 in Resources */,
+				C9922FB41CDDA73900429801 /* Localizable.strings in Resources */,
 				C9C7F51B1C98D7BC001C821C /* Assets.xcassets in Resources */,
 				C9C7F5191C98D7BC001C821C /* Main.storyboard in Resources */,
-				C92B82861CCE05E4007914C4 /* dontcount.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,10 +313,21 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		C9922FB61CDDA73900429801 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9922FB51CDDA73900429801 /* en */,
+				C9922FB81CDDA73F00429801 /* ko */,
+			);
+			name = Localizable.strings;
+			path = Moving8Ball;
+			sourceTree = "<group>";
+		};
 		C9C7F5171C98D7BC001C821C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C9C7F5181C98D7BC001C821C /* Base */,
+				C9922FB01CDDA71A00429801 /* ko */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -341,6 +336,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C9C7F51D1C98D7BC001C821C /* Base */,
+				C9922FB11CDDA71A00429801 /* ko */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

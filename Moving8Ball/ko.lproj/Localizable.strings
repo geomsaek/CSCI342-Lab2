@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  Moving8Ball
+
+  Created by Matthew Saliba on 7/05/2016.
+  Copyright © 2016 Matthew Saliba. All rights reserved.
+*/
+
+MAYBE = "더 노력하세요";
+HAZY = "답변이 확실하지 않으면 내일 다시오세요";
+DECIDE = "이건 분명히 돼";
+SOURCE = "아니요";
+LATER = "나중에 다시물어보세요";
+DONTCOUNT = "그건 아닌거 같아";
