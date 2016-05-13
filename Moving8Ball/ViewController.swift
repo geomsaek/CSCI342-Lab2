@@ -5,8 +5,9 @@
 //  Created by Matthew Saliba on 16/03/2016.
 //  Copyright © 2016 Matthew Saliba. All rights reserved.
 //
-//  https://www.youtube.com/watch?v=uY9TAakoXhA -> Good Source for speech synthesiser
-//  https://www.youtube.com/watch?v=7wqy9dvYzXU -> Good source for NSLocalizedString : In German however
+//  http://www.learnswiftonline.com/mini-tutorials/how-to-download-and-read-json/
+//  https://www.youtube.com/watch?v=QnUcndjwlh0
+//  http://www.ios-blog.co.uk/tutorials/swift/swift-how-to-send-a-post-request-to-a-php-script/
 //
 
 import UIKit
@@ -72,6 +73,57 @@ class ViewController: UIViewController {
                 userresponses.append(userGen!)
             }
         }
+        postData(tempQuestion!, userAnswer: tempAnswer!)
+    }
+    
+    func postData(userQuestion : String, userAnswer : String){
+        
+        let url: NSURL = NSURL(string: "http://li859-75.members.linode.com/addEntry.php")!
+        let bodyData = "question=" + userQuestion + "&answer=" + userAnswer + "&username=mvhs977"
+        let request:NSMutableURLRequest = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        
+        /*
+        var session = NSURLSession.sharedSession()
+        var params = ["question" : userQuestion, "answer" : userAnswer, "username" : "mvhs977" ] as Dictionary<String, String>
+        
+        do {
+            try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+            var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+                if let HTTPResponse = response as? NSHTTPURLResponse {
+                    let statusCode = HTTPResponse.statusCode
+                    
+                    if statusCode == 200 {
+                        print("OK")
+                    }else {
+                        fatalError("FAILED")
+                    }
+                }
+            
+            
+            })
+            
+        }catch {
+            fatalError("FAILED")
+        }*/
+        
+        request.HTTPBody = bodyData.dataUsingEncoding(NSUTF8StringEncoding);
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()){
+            (response, data, error) in
+            if let HTTPResponse = response as? NSHTTPURLResponse {
+                let statusCode = HTTPResponse.statusCode
+                
+                if statusCode == 200 {
+                    print("OK")
+                }else {
+                    fatalError("FAILED")
+                }
+            }
+        }
+        
     }
     
     // history button press

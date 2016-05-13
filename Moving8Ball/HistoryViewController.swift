@@ -6,21 +6,65 @@
 //  Copyright © 2016 Matthew Saliba. All rights reserved.
 //
 
+extension NSURLSessionTask {
+
+    func start(){
+        self.resume()
+    }
+}
+
+
+
 import UIKit
 
-class HistoryViewController: UITableViewController {
+class HistoryViewController: UITableViewController{
 
     var historyresponses = [QuestionResponseModel]()
     
+    var TableData: NSArray!
+
+    var count = 0
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        getData()
+    }
+    
+    func getData(){
+        
+        
+        let requestURL: NSURL = NSURL(string: "http://li859-75.members.linode.com/retrieveAllEntries.php")!
+        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+        let session = NSURLSession.sharedSession()
+        
+        let task = session.dataTaskWithRequest(urlRequest) {
+            (data, response, error) -> Void in
+            
+            let httpResponse = response as! NSHTTPURLResponse
+            let statusCode = httpResponse.statusCode
+            
+            if (statusCode == 200) {
+                
+                do{
+                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                    self.TableData = json as! NSArray
+                    
+                    self.tableView.reloadData()
+                    
+                }catch {
+                    print("Error with Json: \(error)")
+                }
+            }
+        }
+        task.resume()
     }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
 
     // MARK: - Table view data source
 
@@ -31,18 +75,26 @@ class HistoryViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return historyresponses.count
+        if let temp = TableData?.count{
+            return self.TableData.count
+        }else {
+            return 0
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! HistoryCell
         
-        cell.textLabel!.text = historyresponses[indexPath.row].question!
-        cell.detailTextLabel!.text = historyresponses[indexPath.row].answer!
+        let question = self.TableData[indexPath.row]["question"] as! String
+        let answer = self.TableData[indexPath.row]["answer"] as! String
+        let image = self.TableData[indexPath.row]["imageURL"] as! String
+        
+        cell.answer.text = answer
+        cell.question.text = question
+        cell.cImage.image = UIImage(named: image)
 
         return cell
     }
-    
 
     /*
     // Override to support conditional editing of the table view.
