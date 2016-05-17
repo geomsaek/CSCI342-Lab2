@@ -90,6 +90,7 @@ class HistoryViewController: UITableViewController{
         
         let question = self.TableData[indexPath.row]["question"] as! String
         let answer = self.TableData[indexPath.row]["answer"] as! String
+        let image = self.TableData[indexPath.row]["imageURL"] as! String
         
         
         // https://teamtreehouse.com/community/does-anyone-know-how-to-show-an-image-from-url-with-swift
@@ -98,19 +99,14 @@ class HistoryViewController: UITableViewController{
         
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             
-            if let image = self.TableData[indexPath.row]["imageURL"] as? String {
-
-                var myImage =  UIImage(data: NSData(contentsOfURL: NSURL(string:image)!)!)
-            
-                cell.cImage.image = myImage
-                
-                cell.answer.text = answer
-                cell.question.text = question
-                
-            }
+            var myImage =  UIImage(data: NSData(contentsOfURL: NSURL(string:image)!)!)
+            cell.cImage.image = myImage
             self.tableView.reloadData()
         })
-    
+        
+        cell.answer.text = answer
+        cell.question.text = question
+        
         
 
         return cell
