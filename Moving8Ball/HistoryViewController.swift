@@ -13,8 +13,6 @@ extension NSURLSessionTask {
     }
 }
 
-
-
 import UIKit
 
 class HistoryViewController: UITableViewController{
@@ -22,6 +20,8 @@ class HistoryViewController: UITableViewController{
     var historyresponses = [QuestionResponseModel]()
     
     var TableData: NSArray!
+    var initial = false
+    var cache = NSCache()
 
     var count = 0
     
@@ -30,6 +30,7 @@ class HistoryViewController: UITableViewController{
         super.viewDidLoad()
         getData()
     }
+    
     
     func getData(){
         
@@ -51,8 +52,10 @@ class HistoryViewController: UITableViewController{
                     self.TableData = json as! NSArray
                     
                     // call function in the main thread
-                    dispatch_async(dispatch_get_main_queue(), { 
+                    dispatch_async(dispatch_get_main_queue(), {
                         self.tableView.reloadData()
+                  
+                        
                     })
                     
                 }catch {
@@ -86,27 +89,33 @@ class HistoryViewController: UITableViewController{
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! HistoryCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! HistoryCell
         
         let question = self.TableData[indexPath.row]["question"] as! String
         let answer = self.TableData[indexPath.row]["answer"] as! String
         let image = self.TableData[indexPath.row]["imageURL"] as! String
         
-        
         // https://teamtreehouse.com/community/does-anyone-know-how-to-show-an-image-from-url-with-swift
         // need to put data into the main thread
         // also need to load the UIImage differently
         
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        if initial == false {
+            self.initial = true
             
-            var myImage =  UIImage(data: NSData(contentsOfURL: NSURL(string:image)!)!)
-            cell.cImage.image = myImage
+            
+            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                
+                cell.cImage.image = UIImage(data: NSData(contentsOfURL: NSURL(string:image)!)!)
+                
+            })
             self.tableView.reloadData()
-        })
+        }else {
+            cell.cImage.image = UIImage(data: NSData(contentsOfURL: NSURL(string:image)!)!)
+            
+        }
         
         cell.answer.text = answer
         cell.question.text = question
-        
         
 
         return cell
