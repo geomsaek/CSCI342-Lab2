@@ -32,7 +32,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         
-        
         var beforeSpeech:AVSpeechUtterance = AVSpeechUtterance(string: beforeSpeechString)
         speechsynt.speakUtterance(beforeSpeech)
         
@@ -79,18 +78,26 @@ class ViewController: UIViewController {
     func postData(userQuestion : String, userAnswer : String){
         
         let url: NSURL = NSURL(string: "http://li859-75.members.linode.com/addEntry.php")!
+        
         let bodyData = "question=" + userQuestion + "&answer=" + userAnswer + "&username=mvhs977"
+        
         let request:NSMutableURLRequest = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
+        request.HTTPBody = bodyData.dataUsingEncoding(NSUTF8StringEncoding);
+
         
-        /*
         var session = NSURLSession.sharedSession()
-        var params = ["question" : userQuestion, "answer" : userAnswer, "username" : "mvhs977" ] as Dictionary<String, String>
+//        var params = ["question" : userQuestion, "answer" : userAnswer, "username" : "mvhs977" ] as Dictionary<String, String>
         
         do {
-            try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            // curent code doesnt work as you were trying to send JSON string as the request to the server
+            // server does not handle JSON strings in POST request hence why the commented string didnt work
+            // if server was configured to accept JSON strings in a POST request this would have worked
+            
+            
+            //try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
+            //request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+       //     request.addValue("application/json", forHTTPHeaderField: "Accept")
         
             var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
                 if let HTTPResponse = response as? NSHTTPURLResponse {
@@ -105,23 +112,9 @@ class ViewController: UIViewController {
             
             
             })
-            
+            task.resume()
         }catch {
             fatalError("FAILED")
-        }*/
-        
-        request.HTTPBody = bodyData.dataUsingEncoding(NSUTF8StringEncoding);
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()){
-            (response, data, error) in
-            if let HTTPResponse = response as? NSHTTPURLResponse {
-                let statusCode = HTTPResponse.statusCode
-                
-                if statusCode == 200 {
-                    print("OK")
-                }else {
-                    fatalError("FAILED")
-                }
-            }
         }
         
     }

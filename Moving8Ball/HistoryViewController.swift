@@ -50,7 +50,10 @@ class HistoryViewController: UITableViewController{
                     let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
                     self.TableData = json as! NSArray
                     
-                    self.tableView.reloadData()
+                    // call function in the main thread
+                    dispatch_async(dispatch_get_main_queue(), { 
+                        self.tableView.reloadData()
+                    })
                     
                 }catch {
                     print("Error with Json: \(error)")
@@ -89,9 +92,20 @@ class HistoryViewController: UITableViewController{
         let answer = self.TableData[indexPath.row]["answer"] as! String
         let image = self.TableData[indexPath.row]["imageURL"] as! String
         
+        
+        // https://teamtreehouse.com/community/does-anyone-know-how-to-show-an-image-from-url-with-swift
+        // need to put data into the main thread
+        // also need to load the UIImage differently
+        
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            
+            var myImage =  UIImage(data: NSData(contentsOfURL: NSURL(string:image)!)!)
+            cell.cImage.image = myImage
+        })
+        
         cell.answer.text = answer
         cell.question.text = question
-        cell.cImage.image = UIImage(named: image)
+        
 
         return cell
     }
