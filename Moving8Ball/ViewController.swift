@@ -80,13 +80,22 @@ class ViewController: UIViewController {
         
         let url: NSURL = NSURL(string: "http://li859-75.members.linode.com/addEntry.php")!
         
-        let bodyData = "question=" + userQuestion + "&answer=" + userAnswer + "&username=mvhs977"
+        let urlComponents = NSURLComponents()
+        urlComponents.scheme = "http"
+        urlComponents.host = "li859-75.members.linode.com"
+        urlComponents.path = "/addEntry.php"
         
-        let request:NSMutableURLRequest = NSMutableURLRequest(URL: url)
+        let questionParam = NSURLQueryItem(name: "question", value : userQuestion)
+        let answerParam = NSURLQueryItem(name: "answer", value : userAnswer)
+        let userParam = NSURLQueryItem(name: "username", value : "mvhs977")
+        
+        urlComponents.queryItems = [questionParam, answerParam, userParam]
+        let bodyData = urlComponents.query
+        let request:NSMutableURLRequest = NSMutableURLRequest(URL: urlComponents.URL!)
+        
         request.HTTPMethod = "POST"
-        request.HTTPBody = bodyData.dataUsingEncoding(NSUTF8StringEncoding);
+        request.HTTPBody = bodyData!.dataUsingEncoding(NSUTF8StringEncoding);
 
-        
         let session = NSURLSession.sharedSession()
 //        var params = ["question" : userQuestion, "answer" : userAnswer, "username" : "mvhs977" ] as Dictionary<String, String>
         
