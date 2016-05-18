@@ -8,6 +8,7 @@
 //  http://www.learnswiftonline.com/mini-tutorials/how-to-download-and-read-json/
 //  https://www.youtube.com/watch?v=QnUcndjwlh0
 //  http://www.ios-blog.co.uk/tutorials/swift/swift-how-to-send-a-post-request-to-a-php-script/
+//  http://stackoverflow.com/questions/26364914/http-request-in-swift-with-post-method
 //
 
 import UIKit
@@ -32,7 +33,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         
-        var beforeSpeech:AVSpeechUtterance = AVSpeechUtterance(string: beforeSpeechString)
+        let beforeSpeech:AVSpeechUtterance = AVSpeechUtterance(string: beforeSpeechString)
         speechsynt.speakUtterance(beforeSpeech)
         
     
@@ -79,8 +80,6 @@ class ViewController: UIViewController {
         
         let url: NSURL = NSURL(string: "http://li859-75.members.linode.com/addEntry.php")!
         
-        
-        
         let bodyData = "question=" + userQuestion + "&answer=" + userAnswer + "&username=mvhs977"
         
         let request:NSMutableURLRequest = NSMutableURLRequest(URL: url)
@@ -88,7 +87,7 @@ class ViewController: UIViewController {
         request.HTTPBody = bodyData.dataUsingEncoding(NSUTF8StringEncoding);
 
         
-        var session = NSURLSession.sharedSession()
+        let session = NSURLSession.sharedSession()
 //        var params = ["question" : userQuestion, "answer" : userAnswer, "username" : "mvhs977" ] as Dictionary<String, String>
         
         do {
@@ -96,12 +95,11 @@ class ViewController: UIViewController {
             // server does not handle JSON strings in POST request hence why the commented string didnt work
             // if server was configured to accept JSON strings in a POST request this would have worked
             
-            
             //try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
             //request.addValue("application/json", forHTTPHeaderField: "Content-Type")
        //     request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-            var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
                 if let HTTPResponse = response as? NSHTTPURLResponse {
                     let statusCode = HTTPResponse.statusCode
                     
@@ -111,7 +109,6 @@ class ViewController: UIViewController {
                         fatalError("FAILED")
                     }
                 }
-            
             
             })
             task.resume()
@@ -149,6 +146,7 @@ class ViewController: UIViewController {
         
         
         let historyViewController = segue.destinationViewController as! HistoryViewController
+        historyViewController.getData()
         historyViewController.historyresponses = self.userresponses
         
     }

@@ -33,12 +33,10 @@ class HistoryViewController: UITableViewController{
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        getData()
     }
     
     
     func getData(){
-        
         
         let requestURL: NSURL = NSURL(string: "http://li859-75.members.linode.com/retrieveAllEntries.php")!
         let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
@@ -55,19 +53,6 @@ class HistoryViewController: UITableViewController{
                 do{
                     let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
                     self.TableData = json as! NSArray
-//                    for i in 0..<self.TableData.count {
-//                        
-//                        var location = self.TableData[i]["imageURL"] as! String
-//                        var cachePrev : NSData? = self.cache.objectForKey(location) as? NSData
-//                        
-//                        if let goodData = cachePrev {
-//
-//                        }else {
-//                            
-//                            var data : NSData = NSData(contentsOfURL: NSURL(string:location)!)!
-//                            self.cache.setObject(data, forKey: location)
-//                        }
-//                    }
                     
                     // call function in the main thread
                     dispatch_async(dispatch_get_main_queue(), {
@@ -98,31 +83,26 @@ class HistoryViewController: UITableViewController{
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if let temp = TableData?.count{
-            return self.TableData.count
+            return temp
         }else {
             return 0
         }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! HistoryCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! HistoryCell
             
-        var location = self.TableData[indexPath.row]["imageURL"] as! String
-        var cachePrev : NSData? = self.cache.objectForKey(location) as? NSData
+        let location = self.TableData[indexPath.row]["imageURL"] as! String
+        let cachePrev : NSData? = self.cache.objectForKey(location) as? NSData
         
-        if let goodData = cachePrev {
-
-        }else {
-            var data : NSData = NSData(contentsOfURL: NSURL(string:location)!)!
+        if cachePrev == nil {
+            let data : NSData = NSData(contentsOfURL: NSURL(string:location)!)!
             self.cache.setObject(data, forKey: location)
         }
         
         
         let question = self.TableData[indexPath.row]["question"] as! String
         let answer = self.TableData[indexPath.row]["answer"] as! String
-        let image = self.TableData[indexPath.row]["imageURL"] as! String
-        
-        
         
         // https://teamtreehouse.com/community/does-anyone-know-how-to-show-an-image-from-url-with-swift
         // need to put data into the main thread
@@ -136,7 +116,7 @@ class HistoryViewController: UITableViewController{
                 
                 if let goodData = cachePrev {
                 
-                    var cacheImage = UIImage(data: goodData)
+                    let cacheImage = UIImage(data: goodData)
                     cell.cImage.image = cacheImage
                 }
                 
@@ -147,7 +127,7 @@ class HistoryViewController: UITableViewController{
             //var cachePrev : NSData? = self.cache.objectForKey(image) as? NSData
             if let goodData = cachePrev {
                 
-                var cacheImage = UIImage(data: goodData)
+                let cacheImage = UIImage(data: goodData)
                 cell.cImage.image = cacheImage
             }
             
