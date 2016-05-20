@@ -54,7 +54,7 @@ class HistoryViewController: UITableViewController{
                 do{
                     let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
                     self.TableData = json as! NSArray
-                    print(json)
+
                     // call function in the main thread
                     dispatch_async(dispatch_get_main_queue(), {
                         self.setLoadingScreen(false)
