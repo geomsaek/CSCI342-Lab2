@@ -40,7 +40,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" text="Ask away!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXC-Ed-JjR">
-                                        <rect key="frame" x="86" y="139" width="76.5" height="48"/>
+                                        <rect key="frame" x="86" y="139" width="77" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="bo5-Cq-ufP"/>
                                         </constraints>
@@ -113,11 +113,11 @@
                                 <rect key="frame" x="0.0" y="92" width="320" height="99"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1U1-Pr-PFH" id="2bh-gd-F03">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="98.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="circle1" translatesAutoresizingMaskIntoConstraints="NO" id="WZu-Hp-J5i">
-                                            <rect key="frame" x="15" y="8" width="101" height="82.5"/>
+                                            <rect key="frame" x="15" y="8" width="101" height="83"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vhf-I4-5o8">

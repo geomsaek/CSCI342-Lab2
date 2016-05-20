@@ -15,14 +15,14 @@ extension NSURLSessionTask {
 
 import UIKit
 
-
-
-
 class HistoryViewController: UITableViewController{
 
     var historyresponses = [QuestionResponseModel]()
     
 
+    var overlayView = UIView()
+    var overlay : UIView?
+    var activityIndicator = UIActivityIndicatorView()
     
     var TableData: NSArray!
     var initial = false
@@ -31,13 +31,14 @@ class HistoryViewController: UITableViewController{
     var count = 0
     
     override func viewDidLoad() {
-        
+        self.setLoadingScreen(true)
+        self.getData()
         super.viewDidLoad()
     }
     
     
     func getData(){
-        
+
         let requestURL: NSURL = NSURL(string: "http://li859-75.members.linode.com/retrieveAllEntries.php")!
         let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
         let session = NSURLSession.sharedSession()
@@ -48,14 +49,15 @@ class HistoryViewController: UITableViewController{
             let httpResponse = response as! NSHTTPURLResponse
             let statusCode = httpResponse.statusCode
             
+            
             if (statusCode == 200) {
-                
                 do{
                     let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
                     self.TableData = json as! NSArray
-                    
+                    print(json)
                     // call function in the main thread
                     dispatch_async(dispatch_get_main_queue(), {
+                        self.setLoadingScreen(false)
                         self.tableView.reloadData()
                     })
                     
@@ -65,6 +67,39 @@ class HistoryViewController: UITableViewController{
             }
         }
         task.resume()
+    }
+    
+    // set the loading screen
+    func setLoadingScreen(display: Bool){
+        
+        if display {
+            
+            overlay = UIView(frame: view.frame)
+            overlay!.backgroundColor = UIColor.blackColor()
+            overlay!.alpha = 0.8
+            
+            view.addSubview(overlay!)
+            
+            overlayView.frame = CGRectMake(0, 0, 80, 80)
+            overlayView.center = view.center
+            overlayView.backgroundColor = UIColor(white: 0x0000000, alpha: 1)
+            overlayView.clipsToBounds = true
+            overlayView.layer.cornerRadius = 10
+            
+            activityIndicator.frame = CGRectMake(0, 0, 40, 40)
+            activityIndicator.activityIndicatorViewStyle = .WhiteLarge
+            activityIndicator.center = CGPointMake(overlayView.bounds.width / 2, overlayView.bounds.height / 2)
+            
+            overlayView.addSubview(activityIndicator)
+            view.addSubview(overlayView)
+            
+            activityIndicator.startAnimating()
+        }else {
+            
+            overlay?.removeFromSuperview()
+            activityIndicator.stopAnimating()
+            overlayView.removeFromSuperview()
+        }
     }
 
     
@@ -112,7 +147,7 @@ class HistoryViewController: UITableViewController{
             self.initial = true
             
             
-            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            dispatch_async(dispatch_get_main_queue(), {
                 
                 if let goodData = cachePrev {
                 
