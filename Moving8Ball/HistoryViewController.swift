@@ -52,14 +52,41 @@ class HistoryViewController: UITableViewController{
             
             if (statusCode == 200) {
                 do{
+                    
                     let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
                     self.TableData = json as! NSArray
 
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                    for i in 0..<self.TableData.count {
+                        
+                        
+                        let location = self.TableData[i]["imageURL"] as! String
+                        let cachePrev : NSData? = self.cache.objectForKey(location) as? NSData
+                        
+                        if cachePrev == nil {
+                            let data : NSData = NSData(contentsOfURL: NSURL(string:location)!)!
+                            self.cache.setObject(data, forKey: location)
+                        }
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.tableView.reloadData()
+                            
+                            self.initial = true
+                            self.setLoadingScreen(false)
+                            
+                        }
+
+                    }
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.tableView.reloadData()
+                            
+                            self.initial = true
+                            self.setLoadingScreen(false)
+                            
+                        }
+                    }
                     // call function in the main thread
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.setLoadingScreen(false)
-                        self.tableView.reloadData()
-                    })
+
+                        
                     
                 }catch {
                     print("Error with Json: \(error)")
@@ -126,46 +153,29 @@ class HistoryViewController: UITableViewController{
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! HistoryCell
-            
-        let location = self.TableData[indexPath.row]["imageURL"] as! String
-        let cachePrev : NSData? = self.cache.objectForKey(location) as? NSData
-        
-        if cachePrev == nil {
-            let data : NSData = NSData(contentsOfURL: NSURL(string:location)!)!
-            self.cache.setObject(data, forKey: location)
-        }
         
         
         let question = self.TableData[indexPath.row]["question"] as! String
         let answer = self.TableData[indexPath.row]["answer"] as! String
         
-        // https://teamtreehouse.com/community/does-anyone-know-how-to-show-an-image-from-url-with-swift
-        // need to put data into the main thread
-        // also need to load the UIImage differently
-        
-        if initial == false {
-            self.initial = true
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+
             
-            
-            dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(dispatch_get_main_queue()) {
+                if self.initial {
+                    let location = self.TableData[indexPath.row]["imageURL"] as! String
+                    let cachePrev : NSData? = self.cache.objectForKey(location) as? NSData
                 
-                if let goodData = cachePrev {
-                
-                    let cacheImage = UIImage(data: goodData)
+                    if let goodData = cachePrev {
+                    
+                    let cacheImage = UIImage(data: cachePrev!)
+                    
                     cell.cImage.image = cacheImage
+                    self.tableView.reloadData()
+                    }
                 }
                 
-            })
-            self.tableView.reloadData()
-        }else {
-            
-            //var cachePrev : NSData? = self.cache.objectForKey(image) as? NSData
-            if let goodData = cachePrev {
-                
-                let cacheImage = UIImage(data: goodData)
-                cell.cImage.image = cacheImage
             }
-            
         }
         
         cell.answer.text = answer
